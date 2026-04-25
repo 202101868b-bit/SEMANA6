@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Curvas Parametricas</title>
+
+<style>
+body {
+    background: #0f2027;
+    color: #e0f7fa;
+    font-family: Arial;
+    margin: 0;
+}
+
+.contenedor {
+    display: flex;
+    padding: 30px;
+}
+
+.texto {
+    width: 50%;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+canvas {
+    border: 2px solid white;
+    margin-left: 20px;
+}
+
+button {
+    margin: 20px;
+    padding: 12px;
+    font-size: 18px;
+    background: #00bcd4;
+    border: none;
+    color: white;
+    border-radius: 8px;
+}
+</style>
+
+</head>
+<body>
+
+<button onclick="window.location.href='index.html'">⬅ Regresar</button>
+
+<div class="contenedor">
+
+<div class="texto">
+<h2>Curvas Parametricas</h2>
+
+<p>
+Las curvas parametricas son una forma diferente de representar figuras,
+en lugar de depender solo de una variable usamos un valor llamado <b>t</b>, 
+que controla tanto la posicion horizontal como vertical.
+</p>
+
+<p>
+Esto permite dibujar figuras como círculos o trayectorias de movimiento,
+en este ejemplo, el punto gira alrededor del centro formando un ciculo,
+lo que ayuda a entender como funciona este tipo de representacion.
+</p>
+
+</div>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let t = 0;
+
+function animar() {
+    ctx.fillStyle = "#0f2027";
+    ctx.fillRect(0,0,400,400);
+
+    ctx.translate(200,200);
+
+    ctx.beginPath();
+
+    // circulo (controlado)
+    for (let i = 0; i < Math.PI * 2; i += 0.01) {
+        let x = 120 * Math.cos(i);
+        let y = 120 * Math.sin(i);
+
+        if (i === 0) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+    }
+
+    ctx.strokeStyle = "#00e5ff";
+    ctx.stroke();
+
+    // Punto en movimiento
+    let px = 120 * Math.cos(t);
+    let py = 120 * Math.sin(t);
+
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI*2);
+    ctx.fillStyle = "#ff5252";
+    ctx.fill();
+
+    ctx.setTransform(1,0,0,1,0,0);
+
+    t += 0.03;
+
+    requestAnimationFrame(animar);
+}
+
+animar();
+</script>
+
+</body>
+</html>

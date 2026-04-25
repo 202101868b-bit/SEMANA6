@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mallas Poligonales</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #e3f2fd;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 32px;
+}
+
+p {
+    font-size: 20px;
+    width: 60%;
+    margin: auto;
+    line-height: 1.6;
+}
+
+button {
+    margin: 20px;
+    padding: 12px;
+    font-size: 18px;
+    background: #03a9f4;
+    border: none;
+    color: white;
+    border-radius: 8px;
+}
+</style>
+
+</head>
+<body>
+
+<button onclick="window.location.href='index.html'">⬅ Regresar</button>
+
+<h2>Mallas Poligonales</h2>
+
+<p>
+Las mallas poligonales son la base de los objetos en 3D. 
+Todos los modelos están formados por puntos conectados que crean superficies.
+</p>
+
+<p>
+En este ejemplo se muestra una esfera hecha de lineas, lo que permite ver
+claramente su estructura interna.
+</p>
+
+<div id="scene"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / 500,
+    0.1,
+    1000
+);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, 500);
+document.getElementById("scene").appendChild(renderer.domElement);
+
+// ESFERA
+const geometry = new THREE.SphereGeometry(1, 32, 32);
+
+const material = new THREE.MeshBasicMaterial({
+    color: 0x03a9f4,
+    wireframe: true
+});
+
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+camera.position.z = 3;
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    sphere.rotation.y += 0.01;
+    sphere.rotation.x += 0.005;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+</script>
+
+</body>
+</html>
